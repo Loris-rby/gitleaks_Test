@@ -72,3 +72,21 @@ jobs:
 ```
 
 
+## Handling False Positives
+
+Sometimes Gitleaks will flag something that looks like a secret but isn't 
+
+create a .gitleaksignore file in the root of your repository : 
+
+```
+# .gitleaksignore
+# Ignore a specific mock key in unit tests
+src/tests/mock_data.json:gitleaks-rule-id:7be89c1...
+```
+
+Alternatively, you can add a comment directly in your code above the flagged line to skip it:
+
+```java
+// gitleaks:allow
+const fake_api_key = "AIzaSyD-mock-key-for-testing";
+```
