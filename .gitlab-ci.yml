@@ -1,0 +1,63 @@
+stages:
+  - lint
+  - test
+  - security
+  - build
+
+# ======================
+# LINT
+# ======================
+lint:
+  stage: lint
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache bash
+  script:
+    - echo "Running lint..."
+    - echo "Add your linter here (eslint, swiftlint, flake8, etc.)"
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH
+
+# ======================
+# TEST
+# ======================
+test:
+  stage: test
+  image: alpine:latest
+  script:
+    - echo "Running tests..."
+    - echo "Replace with real test command (pytest, swift test, npm test, etc.)"
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH
+
+# ======================
+# SECURITY (GITLEAKS)
+# ======================
+security:gitleaks:
+  stage: security
+  image: zricethezav/gitleaks:latest
+  script:
+    - echo "Scanning for secrets..."
+    - gitleaks detect --source . --verbose --exit-code 1
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH
+
+# ======================
+# BUILD
+# ======================
+build:
+  stage: build
+  image: alpine:latest
+  script:
+    - echo "Building project..."
+    - echo "Replace with your build command (make, mvn, gradle, xcodebuild, etc.)"
+  artifacts:
+    paths:
+      - build/
+    expire_in: 1 week
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+    - if: $CI_COMMIT_BRANCH == "master"
