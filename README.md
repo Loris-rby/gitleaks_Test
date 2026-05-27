@@ -44,7 +44,7 @@ pre-commit install
 
 ## Automate CI/CD Pipeline
 
-If you use GitHub, Gitleaks provides an official, pre-built action. Create a file at .github/workflows/gitleaks.yml:
+If you use GitHub, Gitleaks  Create a file at .github/workflows/gitleaks.yml:
 
 
 ```
